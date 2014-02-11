@@ -1,0 +1,74 @@
+$dir: ltr !default;
+
+@function is-ltr() {
+  @if ($dir == 'ltr') {
+    @return true;
+  }
+  @else {
+    @return false;
+  }
+
+  // @return if($dir == 'ltr', true, false)
+}
+
+@function is-rtl() {
+  @if ($dir == 'rtl') {
+    @return true;
+  }
+  @else {
+    @return false;
+  }
+
+  // @return if($dir == 'rtl', true, false)
+}
+
+@function if-ltr($ltr, $rtl) {
+  @if (is-ltr()) {
+    @return $ltr;
+  }
+  @else {
+    @return $rtl;
+  }
+
+  // @return if(is-ltr(), $ltr, $rtl)
+}
+
+@function ltr-shorthand($values) {
+  @if (is-ltr()) {
+    @return $values;
+  }
+  @else {
+    @return nth($values,1) nth($values,4) nth($values,3) nth($values,2);
+  }
+
+  // @return if(is-ltr(), $values, nth($values,1) nth($values,4) nth($values,3) nth($values,2));
+}
+
+@function ltr-opposite($value) {
+  @if (is-ltr()) {
+    @return $value;
+  }
+  @else {
+    @if ($value == 'left') {
+      @return right;
+    }
+    @else if ($value == 'right') {
+      @return left;
+    }
+  }
+
+  // $opposites: (left: right, right: left);
+  // @return if(is-ltr(), $value, map-get($opposites, $value));
+}
+
+@mixin if-ltr {
+  @if is-ltr() {
+    @content;
+  }
+}
+
+@mixin if-rtl {
+  @if is-rtl() {
+    @content;
+  }
+}
